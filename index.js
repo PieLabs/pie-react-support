@@ -33,7 +33,9 @@
       }
 
       var elementPrototype = Object.create(HTMLElement.prototype);
-
+     
+      elementPrototype.isPieReactElement = true;
+      
       function defineProperty(name, opts) {
         var reserved = '__' + name;
         opts = opts || {};
@@ -58,7 +60,7 @@
         set: function () {
           create(this);
         }
-      }
+      };
       
       defineProperty('env', propOpts); 
       defineProperty('session', propOpts); 
@@ -68,6 +70,7 @@
       elementPrototype.createdCallback = function () {
         // var event = new CustomEvent('pie.register', { bubbles: true });
         // this.dispatchEvent(event);
+        console.log('element created: ', this);
       };
 
       return elementPrototype;
