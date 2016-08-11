@@ -12,30 +12,23 @@
       function create(nativeElement) {
 
         if (
-          nativeElement.__question && 
-          nativeElement.__session && 
-          nativeElement.__env) {
-            
-          nativeElement.__outcome = nativeElement.__outcome || {};
-          
+          nativeElement.__model &&
+          nativeElement.__session) {
+
           var element = React.createElement(ReactComponent, {
             model: nativeElement.__question.model,
-            session: nativeElement.__session,
-            env: nativeElement.__env,
-            outcome: nativeElement.__outcome
+            session: nativeElement.__session
           });
 
           nativeElement.reactiveElement = element;
-          return ReactDOM.render(element, nativeElement, function () {
-            // console.log('rendered!', arguments);
-          });
+          return ReactDOM.render(element, nativeElement, function () { });
         }
       }
 
       var elementPrototype = Object.create(HTMLElement.prototype);
-     
+
       elementPrototype.isPieReactElement = true;
-      
+
       function defineProperty(name, opts) {
         var reserved = '__' + name;
         opts = opts || {};
@@ -55,24 +48,17 @@
           }
         });
       }
-      
+
       var propOpts = {
         set: function () {
           create(this);
         }
       };
-      
-      defineProperty('env', propOpts); 
-      defineProperty('session', propOpts); 
-      defineProperty('question', propOpts); 
-      defineProperty('outcome', propOpts); 
 
-      elementPrototype.createdCallback = function () {
-        // var event = new CustomEvent('pie.register', { bubbles: true });
-        // this.dispatchEvent(event);
-        console.log('element created: ', this);
-      };
+      defineProperty('session', propOpts);
+      defineProperty('model', propOpts);
 
+      elementPrototype.createdCallback = function () { };
       return elementPrototype;
     }
   });
