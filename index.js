@@ -16,7 +16,7 @@
           nativeElement.__session) {
 
           var element = React.createElement(ReactComponent, {
-            model: nativeElement.__question.model,
+            model: nativeElement.__model,
             session: nativeElement.__session
           });
 
